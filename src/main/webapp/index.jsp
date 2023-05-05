@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1><%= "Hello World 3!" %>
-</h1>
+</h1>2
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 </body>
