@@ -1,2 +1,2 @@
 # teste-payara
-teste deploy 2
+teste deploy
