@@ -13,7 +13,7 @@ pipeline {
                         sh '''
                             docker cp /var/jenkins_home/workspace/Metre-SG/target/*.war payara:/opt/payara41/glassfish/domains/domain1/autodeploy/
                             echo $PASSWORD | docker exec -i payara /bin/bash -c 'cat > /tmp/passwordfile'
-                            docker exec payara /opt/payara41/bin/asadmin deploy --user $USERNAME --passwordfile /tmp/passwordfile --force --contextroot /app /opt/payara41/glassfish/domains/domain1/autodeploy/*.war
+                            docker exec payara /opt/payara41/bin/asadmin deploy --user $USERNAME --passwordfile /opt/payara41/glassfish/domains/domain1/config/local-password --force --contextroot /app /opt/payara41/glassfish/domains/domain1/autodeploy/*.war
                         '''
                     }
                 }
