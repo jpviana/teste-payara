@@ -9,12 +9,9 @@ pipeline {
         stage('Deploy to Payara') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'payara_credentials', usernameVariable: 'PAYARA_USERNAME', passwordVariable: 'PAYARA_PASSWORD')]) {
                     docker.image('payara').inside {
-                        sh "docker login -u $PAYARA_USERNAME -p $PAYARA_PASSWORD"
-                        sh '/opt/payara41/bin/asadmin deploy --force --contextroot /app **/*.war'
+                        sh '/opt/payara41/bin/asadmin --user admin --passwordfile /opt/payara41/bin/glassfish/domain/domain1/config/local-password deploy --force --contextroot /app **/*.war'
                     }
-                  }
                 }
             }
         }
