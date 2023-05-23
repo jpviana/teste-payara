@@ -14,6 +14,7 @@ pipeline {
                         sh "docker login -u $PAYARA_USERNAME -p $PAYARA_PASSWORD"
                         sh '/opt/payara41/bin/asadmin deploy --force --contextroot /app **/*.war'
                     }
+                  }
                 }
             }
         }
