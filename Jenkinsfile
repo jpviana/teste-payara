@@ -11,7 +11,7 @@ pipeline {
                 script {
                         sh '''
                             docker cp /var/jenkins_home/workspace/Metre-SG/target/*.war payara:/opt/payara/appserver/glassfish/domains/domain1/autodeploy/
-                            docker exec payara /opt/payara/appserver/bin/asadmin deploy --user admin --passwordfile --passwordfile /opt/payara/passwordFile --force --contextroot /app /opt/payara/appserver/glassfish/domains/domain1/autodeploy/*.war
+                            docker exec payara /opt/payara/appserver/bin/asadmin deploy --user admin --passwordfile passwordFile /opt/payara/passwordFile --force --contextroot /app /opt/payara/appserver/glassfish/domains/domain1/autodeploy/*.war
                         '''
                     }
                 }
