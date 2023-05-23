@@ -9,9 +9,10 @@ pipeline {
         stage('Deploy to Payara') {
             steps {
                 script {
-                    docker.image('payara').inside {
-                        sh '/opt/payara41/bin/asadmin --user admin --passwordfile /opt/payara41/bin/glassfish/domain/domain1/config/local-password deploy --force --contextroot /app **/*.war'
-                    }
+                    sh '''
+                        docker cp **/*.war payara:/opt/payara41/glassfish/domains/domain1/autodeploy/
+                        docker exec payara /opt/payara41/bin/asadmin deploy --force --contextroot /app /opt/payara41/glassfish/domains/domain1/autodeploy/*.war
+                    '''
                 }
             }
         }
