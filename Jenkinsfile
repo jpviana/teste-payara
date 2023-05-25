@@ -13,7 +13,7 @@ pipeline {
                     sh "docker cp $warFile payara:/opt/payara/deployments/"
                     sh "docker exec payara /opt/payara/appserver/bin/asadmin deploy --user admin --passwordfile /opt/payara/passwordFile --force --contextroot /app /opt/payara/deployments/${warFile.name}"
                 }
-                }
             }
         }
     }
+}
