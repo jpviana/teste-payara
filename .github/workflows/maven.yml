@@ -21,7 +21,9 @@ jobs:
     - name: Build with Maven
       run: mvn clean install
     - name: Create deploy directory
-      run: ls $GITHUB_WORKSPACE/target
+      run: mkdir ${{ github.workspace }}/deploy
+    - name: Copy WAR file
+      run: cp ${{ github.workspace }}/target/*.war ${{ github.workspace }}/deploy/
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
@@ -29,6 +31,6 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
-          ls $GITHUB_WORKSPACE/target/
-          cp $GITHUB_WORKSPACE/target/*.war /opt/payara41/glassfish/domains/domain1/autodeploy/
+          mkdir /opt/payara41/glassfish/domains/domain1/autodeploy
+          rsync -e "ssh -o StrictHostKeyChecking=no" -avz ${{ github.workspace }}/deploy/*.war ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/opt/payara41/glassfish/domains/domain1/autodeploy/
           /opt/payara41/bin/asadmin deploy --contextroot /sg --force /opt/payara41/glassfish/domains/domain1/autodeploy/*.war
