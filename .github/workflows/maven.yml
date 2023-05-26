@@ -28,7 +28,7 @@ jobs:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
-        run: cp $GITHUB_WORKSPACE/target/*.war /opt/payara41/glassfish/domains/domain1/autodeploy/
         script: |
-          /opt/payara41/bin/asadmin deploy --contextroot /sg --force /opt/payara41/glassfish/domains/domain1/autodeploy/*.war
+         cp $GITHUB_WORKSPACE/target/*.war /opt/payara41/glassfish/domains/domain1/autodeploy/
+            /opt/payara41/bin/asadmin deploy --contextroot /sg --force /opt/payara41/glassfish/domains/domain1/autodeploy/*.war
 
