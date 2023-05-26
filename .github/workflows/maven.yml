@@ -28,4 +28,4 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
-          bash $GITHUB_WORKSPACE/deploy.sh
+          bash $GITHUB_WORKSPACE/../deploy.sh
