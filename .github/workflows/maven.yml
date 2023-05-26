@@ -31,6 +31,5 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
-          mkdir /opt/payara41/glassfish/domains/domain1/autodeploy
           rsync -e "ssh -o StrictHostKeyChecking=no" -avz ${{ github.workspace }}/deploy/*.war ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/opt/payara41/glassfish/domains/domain1/autodeploy/
           /opt/payara41/bin/asadmin deploy --contextroot /sg --force /opt/payara41/glassfish/domains/domain1/autodeploy/*.war
