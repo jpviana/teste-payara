@@ -29,5 +29,5 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
-          $PAYARA_HOME/bin/asadmin deploy --contextroot /sg --force $GITHUB_WORKSPACE/target/*.war
+          /opt/payara41/bin/asadmin deploy --contextroot /sg --force $GITHUB_WORKSPACE/target/*.war
 
