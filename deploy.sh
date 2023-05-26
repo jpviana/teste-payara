@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PAYARA_HOME="/opt/payara"
+PAYARA_HOME="/opt/payara41"
 APPLICATION_FILE="${GITHUB_WORKSPACE}/target/*.war"
 
 # Inicializa o servidor Payara
