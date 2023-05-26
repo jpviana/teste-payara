@@ -1,2 +1,2 @@
 # teste-payara
-teste deploy 3
+teste deploy GA
