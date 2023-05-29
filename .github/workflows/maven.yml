@@ -43,4 +43,8 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            /opt/payara41/bin/asadmin deploy --contextroot /sg --force ${{ steps.war-path.outputs.war-path }}
+            FILE_PATH="${{ steps.war-path.outputs.war-path }}"
+            FILE_NAME=$(basename "$FILE_PATH")
+            TARGET_PATH="/opt/payara41/glassfish/domains/domain1/autodeploy/$FILE_NAME"
+            rsync -e "ssh -o StrictHostKeyChecking=no" -avz "$FILE_PATH" "***@$TARGET_PATH"
+            /opt/payara41/bin/asadmin deploy --force "$TARGET_PATH"
