@@ -43,4 +43,4 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            /opt/payara41/bin/asadmin deploy --contextroot /sg --force ${{ github.workspace }}/deploy/*.war
+            /opt/payara41/bin/asadmin deploy --contextroot /sg --force ${{ github.workspace }}/deploy/Teste-Deploy-1.0-SNAPSHOT.war
