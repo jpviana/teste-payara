@@ -27,9 +27,7 @@ jobs:
         run: mkdir ${{ github.workspace }}/deploy
 
       - name: Copy WAR file
-        run: |
-          cp ${{ github.workspace }}/target/*.war ${{ github.workspace }}/deploy/
-          echo "::set-output name=war-path::${{ github.workspace }}/deploy/*.war"
+        run: cp ${{ github.workspace }}/target/*.war ${{ github.workspace }}/deploy
 
   deploy:
     needs: build
@@ -43,8 +41,4 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            FILE_PATH="${{ steps.war-path.outputs.war-path }}"
-            FILE_NAME=$(basename "$FILE_PATH")
-            TARGET_PATH="/opt/payara41/glassfish/domains/domain1/autodeploy/$FILE_NAME"
-            rsync -e "ssh -o StrictHostKeyChecking=no" -avz "$FILE_PATH" "root@$TARGET_PATH"
-            /opt/payara41/bin/asadmin deploy --force "$TARGET_PATH"
+            /opt/payara41/bin/asadmin deploy --contextroot /sg --force /opt/payara41/glassfish/domains/domain1/autodeploy/*.war
