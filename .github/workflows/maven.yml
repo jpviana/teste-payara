@@ -23,8 +23,13 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      - name: Create deploy directory
-        run: mkdir ${{ github.workspace }}/deploy
+      - name: Verify directory
+        run: ls ${{ github.workspace }}/target
+        
+      - name: Copy SSH key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           
   deploy:
     needs: build
