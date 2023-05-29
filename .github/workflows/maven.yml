@@ -28,6 +28,8 @@ jobs:
 
       - name: Copy WAR file
         run: cp ${{ github.workspace }}/target/*.war ${{ github.workspace }}/deploy
+      - name: Verifica se copiou o arquivo
+        run: ls /opt/payara41/glassfish/domains/domain1/autodeploy/
 
   deploy:
     needs: build
