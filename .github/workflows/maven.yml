@@ -28,14 +28,16 @@ jobs:
 
       - name: Copy WAR file
         run: cp ${{ github.workspace }}/target/*.war ${{ github.workspace }}/deploy
-      - name: Verifica se copiou o arquivo
-        run: ls ${{ github.workspace }}/deploy
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get absolute path for WAR file
+        id: war-path
+        run: echo "::set-output name=path::$(realpath ${{ github.workspace }}/deploy/*.war)"
+        
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
@@ -43,4 +45,4 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            /opt/payara41/bin/asadmin deploy --contextroot /sg --force ${{ github.workspace }}/deploy/Teste-Deploy-1.0-SNAPSHOT.war
+            /opt/payara41/bin/asadmin deploy --contextroot /sg --force "${{ steps.war-path.outputs.path }}"
