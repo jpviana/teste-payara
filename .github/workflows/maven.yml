@@ -27,17 +27,15 @@ jobs:
         run: mkdir ${{ github.workspace }}/deploy
 
       - name: Copy WAR file
-        run: cp ${{ github.workspace }}/target/*.war ${{ github.workspace }}/deploy
+        run: |
+          cp ${{ github.workspace }}/target/*.war ${{ github.workspace }}/deploy/
+          echo "::set-output name=war-path::${{ github.workspace }}/deploy/*.war"
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get absolute path for WAR file
-        id: war-path
-        run: echo "::set-output name=path::$(realpath ${{ github.workspace }}/deploy/*.war)"
-        
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
@@ -45,4 +43,4 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            /opt/payara41/bin/asadmin deploy --contextroot /sg --force "${{ steps.war-path.outputs.path }}"
+            /opt/payara41/bin/asadmin deploy --contextroot /sg --force ${{ steps.war-path.outputs.war-path }}
