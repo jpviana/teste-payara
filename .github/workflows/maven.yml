@@ -53,5 +53,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            FILE_PATH="/home/runner/work/teste-payara/teste-payara/deploy/*.war"
+            FILE_PATH="${{ github.workspace }}/deploy/Teste-Deploy-1.0-SNAPSHOT.war"
+            ls "$FILE_PATH"
+            ls ${{ github.workspace }}/deploy/
             /opt/payara41/bin/asadmin deploy --contextroot /sg --force "$FILE_PATH"
