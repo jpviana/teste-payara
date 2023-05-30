@@ -26,6 +26,9 @@ jobs:
       - name: Verify directory
         run: ls ${{ github.workspace }}/target
         
+      - name: Create SSH directory
+        run: mkdir -p ~/.ssh
+        
       - name: Copy SSH key
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
