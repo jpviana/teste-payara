@@ -1,0 +1,23 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '9090:8080'
+    volumes:
+      - './app:/app'
+
+    networks:
+      - payara
+
+  #   depends_on:
+  #     - db
+
+  # db:
+  #   image: mysql:5.7
+
+networks:
+  payara:
+    driver: bridge
