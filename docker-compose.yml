@@ -4,19 +4,28 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: app
     ports:
       - '9090:8080'
-    volumes:
-      - './app:/app'
-
     networks:
       - payara
+    depends_on:
+      - db
 
-  #   depends_on:
-  #     - db
-
-  # db:
-  #   image: mysql:5.7
+  db:
+     image: mariadb:10.5
+     container_name: maria-db
+     restart: always
+     environment:
+       - MARIADB_ROOT_PASSWORD=durama@357
+       - MARIADB_USERNAME=metre
+       - MARIADB_PASSWORD=durama@357
+       - MYSQL_TCP_PORT=3307
+     volumes:
+       - ./db/db_conf/my.cnf:/etc/mysql/my.cnf
+       - ./db/db_data:/var/lib/mysql
+     ports:
+       - '33006:3307'
 
 networks:
   payara:
